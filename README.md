@@ -48,6 +48,12 @@ docker run --rm \
 xhost -
 
 ```
+
+Be sure to make the "qgis.sh" script (or whatever you called your script) an executable.
+```
+chmod a+x qgis.sh
+```
+
 The above is the content of qgis.sh so you can just
 ```
 ./qgis.sh
