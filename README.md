@@ -88,10 +88,5 @@ docker ps -a
 then
 ```
 docker rm <process id or container name>
+```
 
-
-
------------
-
-Tim Sutton (tim@kartoza.com)
-July 2014
