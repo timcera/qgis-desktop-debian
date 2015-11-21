@@ -24,7 +24,7 @@ the most optimal way to do this. Current limitations:
 ## Use the docker repository:
 
 ```
-docker pull timcera/qgis-desktop-debian
+docker pull timcera/qgis-desktop
 ```
 
 Required Manual Installation
@@ -48,29 +48,19 @@ docker run --rm \
 xhost -
 
 ```
-The above is the content of run-qgis-master-in-docker.sh so you can just
+The above is the content of qgis.sh so you can just
 ```
-./run-qgis-master-in-docker.sh
-```
-
-
-```
-sudo cp run-qgis-master-in-docker.sh /usr/local/bin
-sudo cp QGIS-2.8.Docker.desktop /usr/share/applications/
-sudo cp qgis-icon-60x60.png /usr/local
+./qgis.sh
 ```
 
-If you follow this approach you will need to create the 
-application launcher yourself, manually. Consult the sources in this
-repository for more details on how to do that.
 
-
-Follow the instructions above to create a desktop shortcut. Then, when you
-click on the QGIS icon this script will run and start the container. 
-
+Put into a directory listed in your PATH environment variable.
+```
+sudo cp qgis.sh /usr/local/bin
+```
 Note that your home directory will be mounted in the container and thus
 accessible to QGIS. If you want other directories to be available, just add
-then to run-qgis-in-docker.sh with -v flags. 
+then to qgis.sh with -v flags. 
 
 If QGIS crashes or hangs it might leave an orphan docker process running. If
 you see the process with 
