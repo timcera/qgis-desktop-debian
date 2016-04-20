@@ -17,7 +17,7 @@ docker pull timcera/qgis-desktop-debian:latest
 Required Manual Installation
 ----------------------------
 To run a container create a shell script similar to below, perhaps called 
-'gqis', but you can call it anything you want.
+'qgis', but you can call it anything you want.
 
 ```
 #!/bin/sh
