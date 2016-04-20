@@ -1,72 +1,64 @@
 docker-qgis-desktop-debian
 ==========================
 
-Based very loosely on kartoza/qgis-desktop.  Instead of compiling, this image
-is a "apt-get install" from http://qgis.org/debian.
+Instead of compiling, this image is a "apt-get install" from
+http://qgis.org/debian of the latest QGIS.
 
 This also includes installation of gdal-bin and python-gdal.
-
-Much of the documentation below is edited from kartoza/qgis-desktop.  Just want
-to acknowledge the source material, but any problems with this documentation you
-should contact me.  
-
-Note this is still experimental and probably does not represent
-the most optimal way to do this. Current limitations:
-
-* Qt4 theme is not carried over nicely
-* Uses xhost + which is not ideal since it allows all remote
-  hosts to display windows on your X display (probably not
-  an issue if you are on a local network).
-
 
 # Getting the image
 
 ## Use the docker repository:
 
 ```
-docker pull timcera/qgis-desktop
+docker pull timcera/qgis-desktop-debian:latest
 ```
 
 Required Manual Installation
 ----------------------------
-To run a container create a script similar to below:
+To run a container create a shell script similar to below, perhaps called 
+'gqis', but you can call it anything you want.
 
 ```
 #!/bin/sh
 
-xhost +
+# Should be platform neutral - at least working on Linux and Windows
+USER_NAME=`basename $HOME`
+
+# HHHOME is used to pass the HOME directory of the user running qgis
+# and is used in "start.sh" to create the same user within the container.
 
 # Users home is mounted as home
 # --rm will remove the container as soon as it ends
 docker run --rm \
     -i -t \
-    -v ${HOME}:/home/${USER} \
+    -v ${HOME}:/home/${USER_NAME} \
     -v /tmp/.X11-unix:/tmp/.X11-unix \
     -e DISPLAY=unix$DISPLAY \
-    timcera/qgis-desktop:master
-
-xhost -
-
+    -e HHHOME=${HOME} \
+    timcera/qgis-desktop-debian:latest
 ```
 
-Be sure to make the "qgis.sh" script (or whatever you called your script) an executable.
+Be sure to make the "qgis" script (or whatever you called your script) an executable.
 ```
-chmod a+x qgis.sh
-```
-
-The above is the content of qgis.sh so you can just
-```
-./qgis.sh
+chmod a+x qgis
 ```
 
+The above is the content of qgis so you can just
+```
+./qgis
+```
+
+The "-v ${HOME}:/home/${USER_NAME}" option will mount your home directory in
+the container.  If you have other mount points, add "-v" options as necessary.
 
 Put into a directory listed in your PATH environment variable.
 ```
-sudo cp qgis.sh /usr/local/bin
+sudo cp qgis /usr/local/bin
 ```
 Note that your home directory will be mounted in the container and thus
 accessible to QGIS. If you want other directories to be available, just add
-then to qgis.sh with -v flags. 
+then to qgis script with -v flags. 
 
 If QGIS crashes or hangs it might leave an orphan docker process running. If
 you see the process with 
@@ -86,3 +78,6 @@ then
 docker rm <process id or container name>
 ```
 
+-----------
+
+Tim Cera (tim@cerazone.net)
