@@ -8,11 +8,42 @@ RUN gpg --export --armor 3FF5FFCAD71472C4 | apt-key add -
 RUN    apt-get -y update
 
 RUN    apt-get install -y \
-           gdal-bin \
-           python-gdal \
-    && apt-get install -y --force-yes \
-           qgis \
-    && apt-get clean \
+           unixodbc-bin \
+           tdsodbc \
+           libmyodbc
+
+RUN    apt-get install -y \
+           odbc-postgresql
+
+RUN    apt-get install -y \
+           libnetcdff5 \
+           libnetcdfc7 \
+           libnetcdfc++4 \
+           libcf0 \
+           libjasper-runtime
+
+# This is here to try and split up the layers into smaller chunks.
+# I chose this to hopefully get most of qt4 installed in this layer.
+RUN    apt-get install -y \
+           libqt4-sql-mysql \
+           qt4-designer \
+           qt4-linguist-tools \
+           qt4-qmake \
+           python-qscintilla2 \
+           python-qt4 \
+           python-qt4-sql \
+           python-sip
+
+RUN    apt-get install -y \
+           gdal-bin
+
+RUN    apt-get install -y \
+           python-gdal
+
+RUN    apt-get install -y --force-yes \
+           qgis
+
+RUN    apt-get clean \
     && apt-get purge \
     && chmod -R a+w /usr/lib/x86_64-linux-gnu/qt4/plugins/designer/ \
     && chmod -R a+w /usr/lib/python2.7/dist-packages/PyQt4/uic/widget-plugins/ 
