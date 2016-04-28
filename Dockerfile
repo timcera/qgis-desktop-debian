@@ -40,6 +40,36 @@ RUN    apt-get install -y \
 RUN    apt-get install -y \
            python-gdal
 
+RUN    apt-get install -y \
+           python-cairo \
+           python-chardet \
+           python-dateutil \
+           python-egenix-mxdatetime \
+           python-egenix-mxtools \
+           python-glade2 \
+           python-gobject-2 \
+           python-gtk2 \
+           python-httplib2 \
+           python-imaging \
+           python-jinja2 \
+           python-markupsafe \
+           python-matplotlib \
+           python-matplotlib-data \
+           python-mock \
+           python-nose \
+           python-pil \
+           python-pkg-resources \
+           python-psycopg2 \
+           python-pygments \
+           python-pyparsing \
+           python-pyspatialite \
+           python-six \
+           python-support \
+           python-talloc \
+           python-tk \
+           python-tz \
+           python-yaml
+
 RUN    apt-get install -y --force-yes \
            qgis
 
